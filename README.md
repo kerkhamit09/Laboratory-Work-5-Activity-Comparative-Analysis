@@ -1,7 +1,7 @@
 # Laboratory-Work-5-Activity-CSC
 
 # COLAB Link(lw5): https://colab.research.google.com/drive/1KZarRddAENLJt_fm52Rc_J6axOBVpG8t?usp=sharing
-# Colab link(good model): 
+# Colab link(good model): https://colab.research.google.com/drive/16Zc94wpGDM8-1TFkRBwa3_vDQAivRBID?usp=sharing
 
 
 ## 📊 Model Comparison Results
