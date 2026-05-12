@@ -37,8 +37,8 @@
 
 | Phase | Layers | Epochs | Learning Rate | Result |
 |-------|--------|--------|---------------|--------|
-| Phase 1 (Frozen) | Base frozen, head trained | 15 | 1e-3 (Adam default) | 78.6% val acc |
-| Phase 2 (Fine-tune) | Top 20 layers unfrozen | ~12-15 | 1e-4 → 5e-5 (ReduceLROnPlateau) | **90.2% val acc** |
+| Phase 1 (Frozen) | Base frozen, head trained | 15 | 1e-3 (Adam default) | 73% val acc |
+| Phase 2 (Fine-tune) | Top 20 layers unfrozen | ~12-15 | 1e-4 → 5e-5 (ReduceLROnPlateau) | **82% val acc** |
 
 ### 🌿 Dataset
 - **20 classes** of Tress (AcaciaTree, ApricotTree, BaleteTree, etc.)
@@ -110,16 +110,34 @@ Our model has the highest precision (fewer false alarms) while maintaining stron
 
 #### 7. Which classes were frequently misclassified?
 **Answer:** Based on the confusion matrix analysis, the most commonly confused classes were:
-- **Water lily variants:** `water_lily`, `white_waterlily`, `yellow_waterlily`, and `Giant_waterlily` were occasionally confused due to similar petal structures and floating leaf patterns
-- **Lettuce types:** `water_letuce` and `Sea_Lettuce` showed some overlap because of their rosette leaf formations
-- **Moss variants:** `Java_moss` was sometimes misclassified as other green aquatic plants due to its fine, filamentous texture
+- **TalisayTree** – 4 misclassifications
+- **StarFruitTree** – 2 misclassifications  
+- **TangerineTree** – 1 misclassification
+
+All other 17 tree species showed zero misclassifications.
 
 #### 8. What patterns did you observe in the confusion matrix?
 **Answer:**
-- **Diagonal dominance:** Strong values along the diagonal indicate correct classifications for most classes
-- **Cluster confusion:** Misclassifications occurred primarily within visually similar taxonomic groups (e.g., all waterlilies, all lettuce-types)
-- **Rare false positives:** Our model rarely predicted completely unrelated classes (e.g., kelp as duckweed), showing it learned meaningful features
-- **Class balance effect:** Classes with more distinctive features (e.g., `Red_algae` with its unique color) had near-perfect classification
+1. **High Overall Accuracy**  
+   The majority of classes (17 out of 20) were perfectly classified with zero errors, indicating strong model performance for most tree species.
+
+2. **Concentrated Error Distribution**  
+   Only 3 classes contributed to all misclassifications, suggesting these specific tree species present unique classification challenges.
+
+3. **Potential Visual Similarity Issues**  
+   The misclassified classes (TalisayTree, StarFruitTree, TangerineTree) may share visual characteristics with other tree species in the dataset, such as:
+   - Similar leaf patterns
+   - Comparable fruit appearance
+   - Analogous bark textures
+4. **Asymmetric Error Pattern**  
+   The confusion matrix reveals that errors are not evenly distributed. TalisayTree accounts for the majority (57%) of all misclassifications, making it the primary challenge for the model.
+
+5. **Data Imbalance Indicator**  
+   The concentration of errors in few classes may indicate:
+   - Insufficient training samples for these species
+   - Higher intra-class variability
+   - Need for additional feature engineering or data augmentation
+
 
 ---
 
