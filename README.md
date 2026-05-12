@@ -41,7 +41,7 @@
 | Phase 2 (Fine-tune) | Top 20 layers unfrozen | ~12-15 | 1e-4 → 5e-5 (ReduceLROnPlateau) | **90.2% val acc** |
 
 ### 🌿 Dataset
-- **20 classes** of aquatic plants (Amazon_sword, Anubias, Arrowhead_plant, etc.)
+- **20 classes** of Tress (AcaciaTree, ApricotTree, BaleteTree, etc.)
 - **~250 images per class** (5,001 total, 4,001 train / 1,000 validation)
 - Images resized to **224×224** for EfficientNetB0 compatibility
 
@@ -56,7 +56,7 @@
 ### A. Model Performance
 
 #### 1. Which pre-trained model achieved the highest accuracy? Why?
-**Answer:** Among the pre-trained models tested without modification, **MobileNetV2** achieved the highest accuracy at **63.8%** test accuracy. This is because MobileNetV2 uses depthwise separable convolutions that are efficient at extracting features from limited datasets. However, our **custom-trained EfficientNetB0 (`best_model_enb0_fixed.keras`)** achieved **90.2%** — the highest overall — by using proper fine-tuning with regularization, data augmentation, and two-phase training (frozen base + selective layer unfreezing).
+**Answer:** Among the pre-trained models tested without modification, **MobileNetV2** achieved the highest accuracy at **80%** test accuracy. This is because MobileNetV2 uses depthwise separable convolutions that are efficient at extracting features from limited datasets. However, our **custom-trained EfficientNetB0 (`best_model_enb0_fixed.keras`)** achieved **92%** — the highest overall — by using proper fine-tuning with regularization, data augmentation, and two-phase training (frozen base + selective layer unfreezing).
 
 #### 2. Which model had the lowest performance? What could be the reason?
 **Answer:** **Pre-trained EfficientNetB0** had the worst performance at only **5.3%** test accuracy. This was due to **input preprocessing mismatch** — EfficientNetB0 expects specific normalization (built-in preprocessing layers) and using manual `Rescaling(1./255)` caused the model to receive incorrectly scaled inputs, preventing any meaningful learning.
@@ -79,11 +79,11 @@ Our best model has the most balanced loss values, indicating good generalization
 ### B. Evaluation Metrics
 
 #### 4. Why is accuracy not enough to evaluate a model?
-**Answer:** Accuracy alone can be misleading because:
-- **Class imbalance:** A model can achieve high accuracy by simply predicting the majority class
-- **Doesn't distinguish error types:** Accuracy treats false positives and false negatives equally, which may not reflect real-world costs
-- **Overfitting risk:** High training accuracy with low test accuracy (like our "Improved" model: 98.7% train vs 79.6% test) looks good on paper but fails in practice
-- **Missing nuance:** Precision, Recall, F1, and AUC provide deeper insight into per-class performance and decision boundaries
+**Answer:** Accuracy alone can sometimes give a false impression of a model’s performance because:
+- **Class imbalance:** A model may achieve high accuracy by predicting only the dominant class most of the time
+- **Doesn't distinguish error types:** Accuracy gives equal importance to false positives and false negatives, even though their real-world impact may differ
+- **Overfitting risk:** A model with very high training accuracy but much lower testing accuracy (such as 98.7% training vs 79.6% testing) may perform well on training data but poorly on unseen data
+- **Missing nuance:** Metrics such as Precision, Recall, F1-score, and AUC provide a more detailed understanding of model performance and classification quality
 
 #### 5. Which model had the best F1-score? What does it indicate?
 **Answer:** Our **`best_model_enb0_fixed`** achieved the best F1-score of **0.9189**. The F1-score is the harmonic mean of Precision and Recall, balancing both metrics. A high F1 indicates the model is both:
